@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class SupernovaLock : MonoBehaviour
 {
-    [SerializeField] private string preLevel_1;
-    [SerializeField] private string preLevel_2;
-    [SerializeField] private GameObject GlobalLib;
-    [SerializeField] private GameObject Button_Supernova;
-    [SerializeField] private GameObject canvasToOpen;
+    [SerializeField] private string preLevel_1; //前置关卡名称1
+    [SerializeField] private string preLevel_2; //前置关卡名称2
+    [SerializeField] private GameObject canvasToOpen; //需要打开的消息画布
 
     public void FinalCheck()
     {
-        LevelControl lc = GlobalLib.GetComponent<LevelControl>();
-        LoadRoom lr = Button_Supernova.GetComponent<LoadRoom>();
+        LevelControl lc = LevelControl.Instance; //获取关卡控制单例
+        LoadRoom lr = gameObject.GetComponent<LoadRoom>(); //获取加载房间组件
 
+        //检查前置关卡是否完成其中之一
         if (lc.IsLevelCompleted(preLevel_1) || lc.IsLevelCompleted(preLevel_2))
         {
             //进入超新星关卡
@@ -25,17 +24,5 @@ public class SupernovaLock : MonoBehaviour
             //显示信息
             canvasToOpen.SetActive(true);
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

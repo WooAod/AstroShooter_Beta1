@@ -2,8 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelControl : MonoBehaviour
+/// <summary>
+/// 这是一个关卡控制单例类，用于管理游戏中各个关卡的完成状态。
+/// 单例：确保全局只有一个实例，跨场景常驻。
+/// </summary>
+public class LevelControl : Singleton<LevelControl>
 {
+    // 关卡完成状态记录
     private Dictionary<string, bool> isCompleted = new Dictionary<string, bool>()
     {
         {"AsteroidBelt", false},
@@ -15,6 +20,7 @@ public class LevelControl : MonoBehaviour
         {"LightningPlanet", false}
     };
 
+    // 标记关卡为已完成
     public void CompleteLevel(string levelName)
     {
         if (isCompleted.ContainsKey(levelName))
@@ -28,6 +34,7 @@ public class LevelControl : MonoBehaviour
         }
     }
 
+    // 检查关卡是否已完成
     public bool IsLevelCompleted(string levelName)
     {
         if (isCompleted.ContainsKey(levelName))
@@ -39,17 +46,5 @@ public class LevelControl : MonoBehaviour
             Debug.LogWarning($"Level {levelName} does not exist in the records.");
             return false;
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

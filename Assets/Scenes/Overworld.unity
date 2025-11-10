@@ -932,8 +932,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preLevel: AsteroidBelt
-  GlobalLib: {fileID: 897836836}
-  ButtonToBeLocked: {fileID: 600580856}
 --- !u!1 &781669097
 GameObject:
   m_ObjectHideFlags: 0
@@ -1366,8 +1364,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preLevel: FlamePlanet
-  GlobalLib: {fileID: 897836836}
-  ButtonToBeLocked: {fileID: 810701097}
 --- !u!1 &827200993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1605,66 +1601,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   preLevel_1: GlacierPlanet
   preLevel_2: LightningPlanet
-  GlobalLib: {fileID: 897836836}
-  Button_Supernova: {fileID: 865847570}
   canvasToOpen: {fileID: 219065315}
---- !u!1 &897836836
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 897836837}
-  - component: {fileID: 897836838}
-  - component: {fileID: 897836839}
-  m_Layer: 0
-  m_Name: GlobalLevelControler
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &897836837
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 897836836}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 731.56244, y: 648.72064, z: -6.266342}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &897836838
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 897836836}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81e6371208373bc4eb32147684e10571, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &897836839
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 897836836}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4716786d0a52980468bede85dcce8a96, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &975414081
 GameObject:
   m_ObjectHideFlags: 0
@@ -1826,8 +1763,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preLevel: WaterPlanet
-  GlobalLib: {fileID: 897836836}
-  ButtonToBeLocked: {fileID: 975414081}
 --- !u!1 &1304413526
 GameObject:
   m_ObjectHideFlags: 0
@@ -2527,8 +2462,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preLevel: GrassPlanet
-  GlobalLib: {fileID: 897836836}
-  ButtonToBeLocked: {fileID: 1445342582}
 --- !u!1 &1498628681
 GameObject:
   m_ObjectHideFlags: 0
@@ -3360,8 +3293,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preLevel: SteamPlanet
-  GlobalLib: {fileID: 897836836}
-  ButtonToBeLocked: {fileID: 2006162461}
 --- !u!1 &2113876957
 GameObject:
   m_ObjectHideFlags: 0
@@ -3523,8 +3454,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preLevel: AsteroidBelt
-  GlobalLib: {fileID: 897836836}
-  ButtonToBeLocked: {fileID: 2113876957}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -3533,4 +3462,3 @@ SceneRoots:
   - {fileID: 1304413530}
   - {fileID: 219065319}
   - {fileID: 123682644}
-  - {fileID: 897836837}

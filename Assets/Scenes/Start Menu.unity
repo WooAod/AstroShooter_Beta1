@@ -247,7 +247,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u5F00\u59CB\u6E38\u620F"
+  m_text: "\u65B0\u6E38\u620F"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a648894fe52902449a95ec6826dfdc2d, type: 2}
   m_sharedMaterial: {fileID: 8482507087645679090, guid: a648894fe52902449a95ec6826dfdc2d, type: 2}
@@ -470,6 +470,7 @@ GameObject:
   - component: {fileID: 1010181952}
   - component: {fileID: 1010181951}
   - component: {fileID: 1010181950}
+  - component: {fileID: 1010181953}
   m_Layer: 5
   m_Name: Start Button
   m_TagString: Untagged
@@ -541,7 +542,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1470867200}
+      - m_Target: {fileID: 1010181953}
         m_TargetAssemblyTypeName: LoadRoom, Assembly-CSharp
         m_MethodName: GetLoading
         m_Mode: 1
@@ -591,6 +592,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1010181948}
   m_CullTransparentMesh: 1
+--- !u!114 &1010181953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1010181948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eaab1c728c509a46a45cb15b7307e35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToLoad: Overworld
 --- !u!1 &1026537126
 GameObject:
   m_ObjectHideFlags: 0
@@ -996,7 +1010,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u7EE7\u7EED"
+  m_text: "\u7EE7\u7EED\u6E38\u620F"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a648894fe52902449a95ec6826dfdc2d, type: 2}
   m_sharedMaterial: {fileID: 8482507087645679090, guid: a648894fe52902449a95ec6826dfdc2d, type: 2}
@@ -1073,51 +1087,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1336846673}
   m_CullTransparentMesh: 1
---- !u!1 &1470867199
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1470867201}
-  - component: {fileID: 1470867200}
-  m_Layer: 0
-  m_Name: GetToOverworld
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1470867200
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1470867199}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5eaab1c728c509a46a45cb15b7307e35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneToLoad: Overworld
---- !u!4 &1470867201
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1470867199}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1635080509
 GameObject:
   m_ObjectHideFlags: 0
@@ -1464,11 +1433,72 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2011097011}
   m_CullTransparentMesh: 1
+--- !u!1 &2141077178
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2141077181}
+  - component: {fileID: 2141077179}
+  - component: {fileID: 2141077182}
+  m_Layer: 0
+  m_Name: GlobalSetter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2141077179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141077178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa312cbe7cbd5a249aa24081416b4cfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetPerfab: {fileID: 8402547206267949199, guid: 4dde7a58d3493af49856cb0ced451d27, type: 3}
+  markerId: LevelControl
+--- !u!4 &2141077181
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141077178}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2141077182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141077178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa312cbe7cbd5a249aa24081416b4cfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetPerfab: {fileID: 4337172191591259557, guid: 0da777ad98422e541b103e996cc88f0f, type: 3}
+  markerId: LightControl
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 2141077181}
   - {fileID: 1635080513}
   - {fileID: 1181439545}
   - {fileID: 157451281}
-  - {fileID: 1470867201}

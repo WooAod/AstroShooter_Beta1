@@ -5,30 +5,20 @@ using UnityEngine.UI;
 
 public class SingleLock : MonoBehaviour
 {
-    [SerializeField] private string preLevel;
-    [SerializeField] private GameObject GlobalLib;
-    [SerializeField] private GameObject ButtonToBeLocked;
+    [SerializeField] private string preLevel; //前置关卡名称
 
     private void Awake()
     {
-        LevelControl lc = GlobalLib.GetComponent<LevelControl>();
-        bool interactable = false;
+        LevelControl lc = LevelControl.Instance; //获取关卡控制单例
+        bool interactable = false; //默认不可交互
+
         if (lc.IsLevelCompleted(preLevel))
         {
+            //前置关卡完成，设置为可交互
             interactable = true;
         }
-        ButtonToBeLocked.GetComponent<Button>().interactable = interactable;
-    }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        //应用缓冲
+        gameObject.GetComponent<Button>().interactable = interactable;
     }
 }
