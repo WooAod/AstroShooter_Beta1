@@ -8,8 +8,10 @@ using UnityEngine;
 /// </summary>
 public class LevelControl : Singleton<LevelControl>
 {
+    [SerializeField] private bool _debugMode = false;
+
     // 关卡完成状态记录
-    private Dictionary<string, bool> isCompleted = new Dictionary<string, bool>()
+    private static Dictionary<string, bool> isCompleted = new Dictionary<string, bool>()
     {
         {"AsteroidBelt", false},
         {"GrassPlanet", false},
@@ -20,8 +22,22 @@ public class LevelControl : Singleton<LevelControl>
         {"LightningPlanet", false} //预留功能：读档
     };
 
+    void Start()
+    {
+        if (_debugMode)
+        {
+            // 调试模式下，标记所有关卡为已完成
+            List<string> levelNames = new List<string>(isCompleted.Keys);
+            foreach (string levelName in levelNames)
+            {
+                CompleteLevel(levelName);
+            }
+            Debug.Log("[LevelControl] Debug mode: All levels marked as completed.");
+        }
+    }
+
     // 标记关卡为已完成
-    public void CompleteLevel(string levelName)
+    public static void CompleteLevel(string levelName)
     {
         if (isCompleted.ContainsKey(levelName))
         {
@@ -35,7 +51,7 @@ public class LevelControl : Singleton<LevelControl>
     }
 
     // 检查关卡是否已完成
-    public bool IsLevelCompleted(string levelName)
+    public static bool IsLevelCompleted(string levelName)
     {
         if (isCompleted.ContainsKey(levelName))
         {
