@@ -31,6 +31,8 @@ public class UIControl : Singleton<UIControl>
             }
             existingHBar = Instantiate(HBarPerfab);
 
+            if(!LevelControl.IsLevelCompleted("SteamPlanet")) return;
+
             if (existingEBar != null)
             {
                 Destroy(existingEBar);

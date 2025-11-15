@@ -22,6 +22,17 @@ public class EnergyChargeSystem : MonoBehaviour
     public bool IsFull => full;
     private bool full = false;                     // 是否充满
 
+    // 新增：在Awake中根据关卡状态决定是否启用组件
+    private void Awake()
+    {
+        // 当 SteamPlanet 在 LevelControl 中为 false（未完成/未解锁）时，完全禁用本组件
+        if (!LevelControl.IsLevelCompleted("SteamPlanet"))
+        {
+            enabled = false; // 禁用后将不会触发 OnEnable/Start/Update 等生命周期
+            return;
+        }
+    }
+
     // 能量变化事件 (currentEnergy, maxEnergy)
     public static event System.Action<int, int> OnEnergyChanged;
     private void OnEnable() => SceneManager.sceneLoaded += OnSceneLoaded;

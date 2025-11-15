@@ -46,7 +46,7 @@ public class TestEnemy : EnemySet
 
     protected override void StartApply()
     {
-        // 注册技能（注意：先注册，再调用 base.Start() 开启 AI 循环）
+        // 注册技能
         SkillList.Add(new EnemySkill(
             name: "Shoot",
             action: Shoot,

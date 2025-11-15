@@ -8,11 +8,13 @@ using UnityEngine;
 /// </summary>
 public class LevelControl : Singleton<LevelControl>
 {
+    [SerializeField] private bool _demoMode = false;
     [SerializeField] private bool _debugMode = false;
 
     // 关卡完成状态记录
     private static Dictionary<string, bool> isCompleted = new Dictionary<string, bool>()
     {
+        {"Training", false},
         {"AsteroidBelt", false},
         {"GrassPlanet", false},
         {"WaterPlanet", false},
@@ -24,6 +26,14 @@ public class LevelControl : Singleton<LevelControl>
 
     void Start()
     {
+        if(_demoMode)
+        {
+            // 演示模式下，标记部分关卡为已完成
+            CompleteLevel("Training");
+            CompleteLevel("AsteroidBelt");
+            Debug.Log("[LevelControl] Demo mode: Some levels marked as completed.");
+        }
+
         if (_debugMode)
         {
             // 调试模式下，标记所有关卡为已完成

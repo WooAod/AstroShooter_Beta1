@@ -37,3 +37,15 @@ MonoBehaviour:
     includedInFlow: 0
     cachedPath: Assets/Scenes/ToBeContinued.unity
     cachedGuid: c03a622469834dd4b86dc116936d3e5a
+  - sceneAsset: {fileID: 102900000, guid: 8ed006079489f0a4a9d43fb7cf3b828b, type: 3}
+    category: 1
+    levelIndex: 2
+    includedInFlow: 1
+    cachedPath: Assets/Scenes/GrassPlanet/GrassPlanet.unity
+    cachedGuid: 8ed006079489f0a4a9d43fb7cf3b828b
+  - sceneAsset: {fileID: 102900000, guid: 1d33d455bbe516440b2439295c7848da, type: 3}
+    category: 1
+    levelIndex: 2
+    includedInFlow: 0
+    cachedPath: Assets/Scenes/GrassPlanet/GrassPlanet_boss.unity
+    cachedGuid: 1d33d455bbe516440b2439295c7848da
