@@ -14,6 +14,13 @@ public class Dash : MonoBehaviour
     public Material invincibleMaterial;      // 无敌时的材质（虚化效果）
     private Material originalMaterial;       // 原始材质
 
+    // 新增：冲刺碰撞鲁棒性
+    [Header("冲刺碰撞稳健性")]
+    [SerializeField] private float dashSkin = 0.05f;     // 目标点与障碍的最小安全距离
+    [SerializeField] private bool useRbMovePosition = true; // 用 MovePosition 驱动位移
+    private readonly RaycastHit2D[] _castHits = new RaycastHit2D[8];
+    private ContactFilter2D _dashFilter;
+
     private bool isDashing = false;          // 是否正在冲刺
     private bool isCooldown = false;         // 是否在冷却中
     private float dashTimer = 0f;            // 冲刺计时器
@@ -48,6 +55,14 @@ public class Dash : MonoBehaviour
 
         // 初始化移动方向为右方
         lastMoveDirection = Vector2.right;
+
+        // 初始化冲刺接触过滤器（与 obstacleLayers 一致，且忽略触发器）
+        _dashFilter = new ContactFilter2D
+        {
+            useLayerMask = true,
+            layerMask = obstacleLayers,
+            useTriggers = false
+        };
     }
 
     void Update()
@@ -132,25 +147,33 @@ public class Dash : MonoBehaviour
             SetInvincible(true);
         }
         
+        // 1) 冲刺前去穿透：若与障碍重叠/贴面，先把自己沿法线推出“皮肤”距离
+        ResolveInitialOverlap();
 
-        Vector2 startPosition = transform.position;
-        Vector2 targetPosition = CalculateDashTargetPosition(startPosition, direction);
+        Vector2 startPosition = rb ? rb.position : (Vector2)transform.position;
+        Vector2 targetPosition = CalculateDashTargetPositionSafe(startPosition, direction);
         float elapsedTime = 0f;
 
-        // 冲刺移动
+        // 2) 冲刺移动（沿直线插值）
         while (elapsedTime < dashDuration)
         {
             elapsedTime += Time.deltaTime;
-            float progress = elapsedTime / dashDuration;
+            float progress = dashDuration > 0f ? Mathf.Clamp01(elapsedTime / dashDuration) : 1f;
+            Vector2 nextPos = Vector2.Lerp(startPosition, targetPosition, progress);
 
-            // 使用平滑移动
-            transform.position = Vector2.Lerp(startPosition, targetPosition, progress);
+            if (rb != null && useRbMovePosition)
+                rb.MovePosition(nextPos);
+            else
+                transform.position = nextPos;
 
             yield return null;
         }
 
-        // 确保最终位置准确
-        transform.position = targetPosition;
+        // 确保最终位置准确（仍保持皮肤距离外）
+        if (rb != null && useRbMovePosition)
+            rb.MovePosition(targetPosition);
+        else
+            transform.position = targetPosition;
 
         // 结束冲刺
         isDashing = false;
@@ -166,19 +189,85 @@ public class Dash : MonoBehaviour
         StartCoroutine(StartCooldown());
     }
 
-    Vector2 CalculateDashTargetPosition(Vector2 startPos, Vector2 direction)
+    // 用刚体/碰撞体 Cast 计算最远可达位置（与障碍留出 dashSkin）
+    private Vector2 CalculateDashTargetPositionSafe(Vector2 startPos, Vector2 direction)
     {
-        Vector2 targetPos = startPos + direction * dashDistance;
+        Vector2 dir = direction.sqrMagnitude > 0f ? direction.normalized : Vector2.right;
+        float maxDist = Mathf.Max(0f, dashDistance);
 
-        // 检测冲刺路径上的障碍物
-        RaycastHit2D hit = Physics2D.Raycast(startPos, direction, dashDistance, obstacleLayers);
-        if (hit.collider != null)
+        // 优先使用自身形状 Cast，防止仅用 Ray 导致起点在墙内的边界问题
+        if (playerCollider != null)
         {
-            // 如果有障碍物，停在障碍物前一小段距离
-            targetPos = hit.point - direction * 0.3f;
+            int hitCount = playerCollider.Cast(dir, _dashFilter, _castHits, maxDist + dashSkin);
+            if (hitCount == 0)
+            {
+                return startPos + dir * maxDist;
+            }
+
+            float allow = maxDist;
+            for (int i = 0; i < hitCount; i++)
+            {
+                var h = _castHits[i];
+                // 预留皮肤距离
+                float d = h.distance - dashSkin;
+                if (d < allow)
+                    allow = Mathf.Max(0f, d);
+            }
+            return startPos + dir * allow;
+        }
+        else
+        {
+            // 回退：使用 Raycast（与原实现等价但预留皮肤）
+            RaycastHit2D hit = Physics2D.Raycast(startPos, dir, maxDist + dashSkin, obstacleLayers);
+            if (hit.collider != null)
+            {
+                float allow = Mathf.Max(0f, hit.distance - dashSkin);
+                return startPos + dir * allow;
+            }
+            return startPos + dir * maxDist;
+        }
+    }
+
+    // 若起点与障碍重叠/贴面，按法线推出皮肤距离，避免“从墙内开始冲刺”
+    private void ResolveInitialOverlap()
+    {
+        if (playerCollider == null) return;
+
+        // 收集所有重叠碰撞体
+        var results = new Collider2D[8];
+        int count = playerCollider.OverlapCollider(_dashFilter, results);
+        if (count <= 0) return;
+
+        Vector2 totalPush = Vector2.zero;
+        for (int i = 0; i < count; i++)
+        {
+            var other = results[i];
+            if (other == null) continue;
+
+            ColliderDistance2D dist = playerCollider.Distance(other);
+            if (dist.isOverlapped)
+            {
+                // normal 指向从本 Collider 指向对方的方向
+                // 将自身沿 -normal 推出 |distance| + skin
+                float pushLen = Mathf.Abs(dist.distance) + dashSkin;
+                totalPush += (-dist.normal) * pushLen;
+            }
+            else if (dist.distance < dashSkin)
+            {
+                // 非重叠但贴面过近，保持皮肤距离
+                float need = dashSkin - dist.distance;
+                totalPush += (-dist.normal) * need;
+            }
         }
 
-        return targetPos;
+        if (totalPush != Vector2.zero)
+        {
+            Vector2 newPos = (rb ? rb.position : (Vector2)transform.position) + totalPush;
+            if (rb != null && useRbMovePosition)
+                rb.MovePosition(newPos);
+            else
+                transform.position = newPos;
+        }
     }
 
     void SetInvincible(bool invincible)

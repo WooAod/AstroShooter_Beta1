@@ -129,7 +129,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 2
 --- !u!50 &1214427237701417104
 Rigidbody2D:
   serializedVersion: 4
@@ -145,7 +145,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -169,7 +169,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 537b491f816c5764da15b51bed34456c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7
+  speed: 42
+  obstacleLayers:
+    serializedVersion: 2
+    m_Bits: 8
+  skin: 0.03
+  slideAlongWalls: 1
 --- !u!114 &7688991918883022935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,9 +218,11 @@ MonoBehaviour:
   cooldown: 0.4
   obstacleLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   launchKey: 324
   invincibleMaterial: {fileID: 0}
+  dashSkin: 0.05
+  useRbMovePosition: 1
 --- !u!114 &452366863707266635
 MonoBehaviour:
   m_ObjectHideFlags: 0
